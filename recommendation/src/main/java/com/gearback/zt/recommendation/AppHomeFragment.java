@@ -86,12 +86,16 @@ public class AppHomeFragment extends Fragment {
                 appDataBaseHelper.updateApp(promoteApp);
 
                 AppDialog appDialog = AppDialog.newInstance(promoteApp.getToken());
+                appDialog.SetData(appCategories);
                 appDialog.show(getActivity().getSupportFragmentManager(), "appDialog");
             }
             else {
                 AppDialog appDialog = AppDialog.newInstance("");
+                appDialog.SetData(appCategories);
                 appDialog.show(getActivity().getSupportFragmentManager(), "appDialog");
             }
+
+
         }
 
         SortCategories();
