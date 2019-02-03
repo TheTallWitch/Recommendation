@@ -78,6 +78,59 @@ public class Recommend {
             }
         }
     }
+    public void CheckDate(Context context, CheckDateListener listener) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String lastDate = preferences.getString("LAST_PROMOTE_DATE", "");
+        int myCategory = preferences.getInt("MY_CATEGORY", -1);
+        if (lastDate.equals("")) {
+            if (myCategory == -1) {
+                if (listener != null) {
+                    listener.onResult(false);
+                }
+            }
+            else {
+                if (listener != null) {
+                    listener.onResult(true);
+                }
+            }
+        }
+        else {
+            Date date = methods.StringDateToDate(lastDate, Methods.DATEFORMAT2);
+            if (date != null) {
+                int addDays = 15;
+                if (myCategory != -1) {
+                    try {
+                        if (appDataBaseHelper == null) {
+                            appDataBaseHelper = new AppDataBaseHelper(context);
+                        }
+                        appDataBaseHelper.opendatabase();
+                        SimilarApp promoteApp = appDataBaseHelper.getPromoteApp(myCategory, appToken);
+                        if (promoteApp == null) {
+                            addDays = 30;
+                        }
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                Calendar nowCalendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_MONTH, addDays);
+                if (nowCalendar.getTime().after(calendar.getTime())) {
+                    if (listener != null) {
+                        listener.onResult(true);
+                    }
+                }
+                else {
+                    if (listener != null) {
+                        listener.onResult(false);
+                    }
+                }
+            }
+        }
+    }
     public void FetchApps(final Context context, ApplicationData applicationData, final FetchAppResult listener) {
         CheckDate(context, applicationData);
         HttpGetRequest getRequest = new HttpGetRequest(null, new HttpGetRequest.TaskListener() {
@@ -162,6 +215,10 @@ public class Recommend {
 
     public interface FetchAppResult {
         public void onResult(int myCategory, List<AppCategory> appCategories);
+    }
+
+    public interface CheckDateListener {
+        public void onResult(boolean showDot);
     }
 
     public interface BackListener {
