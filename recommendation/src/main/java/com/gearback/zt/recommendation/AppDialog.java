@@ -21,6 +21,8 @@ import com.gearback.methods.Methods;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppDialog extends DialogFragment {
     Methods methods = new Methods();
@@ -31,7 +33,7 @@ public class AppDialog extends DialogFragment {
 
     Recommend.SimilarApp app = null;
     AppDataBaseHelper appDataBaseHelper = null;
-    ApplicationData applicationData;
+    List<Recommend.AppCategory> appCategories = new ArrayList<>();
 
     public static AppDialog newInstance(String token) {
         AppDialog f = new AppDialog();
@@ -52,7 +54,6 @@ public class AppDialog extends DialogFragment {
         appBtn = view.findViewById(R.id.appBtn);
         acceptBtn = view.findViewById(R.id.setDialogBtn);
         rejectBtn = view.findViewById(R.id.closeDialogBtn);
-        applicationData = (ApplicationData) applicationData;
 
         if (getArguments().getString("token").equals("")) {
             appBtn.setVisibility(View.GONE);
@@ -75,9 +76,9 @@ public class AppDialog extends DialogFragment {
                 appName.setText(app.getName());
                 appDescription.setText(app.getDescription());
                 Picasso.with(getActivity()).load(app.getIcon().replace(".png", "promo.png")).into(appIcon);
-                for (int j = 0; j < applicationData.appCategories.size(); j++) {
-                    if (applicationData.appCategories.get(j).getId() == app.getCategory()) {
-                        appCategory.setText(applicationData.appCategories.get(j).getName());
+                for (int j = 0; j < appCategories.size(); j++) {
+                    if (appCategories.get(j).getId() == app.getCategory()) {
+                        appCategory.setText(appCategories.get(j).getName());
                         break;
                     }
                 }
@@ -126,6 +127,11 @@ public class AppDialog extends DialogFragment {
 
         return view;
     }
+    
+    public void SetData(List<Recommend.AppCategory> appCategories) {
+        this.appCategories = appCategories;
+    }
+    
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);

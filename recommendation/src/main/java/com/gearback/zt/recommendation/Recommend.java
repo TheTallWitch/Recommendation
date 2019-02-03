@@ -32,17 +32,18 @@ public class Recommend {
     private Methods methods = new Methods();
     private AppDataBaseHelper appDataBaseHelper = null;
     private String appToken = "";
+    private boolean showDot = false;
 
-    public void CheckDate(Context context, ApplicationData applicationData) {
+    public void CheckDate(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String lastDate = preferences.getString("LAST_PROMOTE_DATE", "");
         int myCategory = preferences.getInt("MY_CATEGORY", -1);
         if (lastDate.equals("")) {
             if (myCategory == -1) {
-                applicationData.showDot = false;
+                showDot = false;
             }
             else {
-                applicationData.showDot = true;
+                showDot = true;
             }
         }
         else {
@@ -70,10 +71,10 @@ public class Recommend {
                 Calendar nowCalendar = Calendar.getInstance();
                 calendar.add(Calendar.DAY_OF_MONTH, addDays);
                 if (nowCalendar.getTime().after(calendar.getTime())) {
-                    applicationData.showDot = true;
+                    showDot = true;
                 }
                 else {
-                    applicationData.showDot = false;
+                    showDot = false;
                 }
             }
         }
@@ -131,8 +132,8 @@ public class Recommend {
             }
         }
     }
-    public void FetchApps(final Context context, ApplicationData applicationData, final FetchAppResult listener) {
-        CheckDate(context, applicationData);
+    public void FetchApps(final Context context, final FetchAppResult listener) {
+        CheckDate(context);
         HttpGetRequest getRequest = new HttpGetRequest(null, new HttpGetRequest.TaskListener() {
             @Override
             public void onFinished(String result) {

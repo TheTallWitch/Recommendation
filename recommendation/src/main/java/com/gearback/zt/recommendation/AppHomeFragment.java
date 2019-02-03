@@ -34,10 +34,13 @@ public class AppHomeFragment extends Fragment {
     Recommend.SimilarApp promoteApp = null;
     Methods methods = new Methods();
     AppDataBaseHelper appDataBaseHelper = null;
-    ApplicationData applicationData;
 
     Recommend.BackListener backListener = null;
     Recommend.ListClickListener clickListener = null;
+    
+    int myCategory = 0;
+    boolean showDot = false;
+    List<Recommend.AppCategory> appCategories = new ArrayList<>();
 
     //app token
 
@@ -46,7 +49,6 @@ public class AppHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.app_home_fragment, container, false);
         backBtn = view.findViewById(R.id.backBtn);
         itemList = view.findViewById(R.id.itemList);
-        applicationData = (ApplicationData) getActivity().getApplication();
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,13 +59,17 @@ public class AppHomeFragment extends Fragment {
             }
         });
 
+        return view;
+    }
+
+    public void InitializeData() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         try {
             if (appDataBaseHelper == null) {
                 appDataBaseHelper = new AppDataBaseHelper(getActivity());
             }
-            promoteApp = appDataBaseHelper.getPromoteApp(applicationData.myCategory, getArguments().getString("token"));
+            promoteApp = appDataBaseHelper.getPromoteApp(myCategory, getArguments().getString("token"));
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -73,7 +79,7 @@ public class AppHomeFragment extends Fragment {
         editor.putString("LAST_PROMOTE_DATE", methods.calendarToString(Calendar.getInstance(), Methods.DATEFORMAT2));
         editor.apply();
 
-        if (applicationData.showDot) {
+        if (showDot) {
             if (promoteApp != null) {
                 promoteApp.setPromoted(1);
                 promoteApp.setDate(methods.calendarToString(Calendar.getInstance(), Methods.DATEFORMAT2));
@@ -89,37 +95,35 @@ public class AppHomeFragment extends Fragment {
         }
 
         SortCategories();
-
-        return view;
     }
 
     public void SortCategories() {
         Recommend.AppCategory mainCat = null;
-        for (int i = 0; i < applicationData.appCategories.size(); i++) {
-            if (applicationData.appCategories.get(i).getId() == applicationData.myCategory) {
-                mainCat = applicationData.appCategories.get(i);
-                applicationData.appCategories.remove(i);
+        for (int i = 0; i < appCategories.size(); i++) {
+            if (appCategories.get(i).getId() == myCategory) {
+                mainCat = appCategories.get(i);
+                appCategories.remove(i);
                 break;
             }
         }
-        applicationData.appCategories.add(0, mainCat);
+        appCategories.add(0, mainCat);
 
         try {
             if (appDataBaseHelper == null) {
                 appDataBaseHelper = new AppDataBaseHelper(getActivity());
             }
-            for (int i = 0; i < applicationData.appCategories.size(); i++) {
-                applicationData.appCategories.get(i).setApps(appDataBaseHelper.getApps(applicationData.appCategories.get(i).getId()));
+            for (int i = 0; i < appCategories.size(); i++) {
+                appCategories.get(i).setApps(appDataBaseHelper.getApps(appCategories.get(i).getId()));
             }
 
             LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
             itemList.setLayoutManager(mLinearLayoutManager);
 
-            adapter = new AppCategoryAdapter(getActivity(), applicationData.appCategories, new AppCategoryAdapter.OnItemClickListener() {
+            adapter = new AppCategoryAdapter(getActivity(), appCategories, new AppCategoryAdapter.OnItemClickListener() {
                 @Override
                 public void onCategoryClick(int position) {
                     if (clickListener != null) {
-                        clickListener.onClick(applicationData.appCategories.get(position).getId(), applicationData.appCategories.get(position).getName());
+                        clickListener.onClick(appCategories.get(position).getId(), appCategories.get(position).getName());
                     }
                 }
 
@@ -148,6 +152,14 @@ public class AppHomeFragment extends Fragment {
 
     public void SetClickListener(Recommend.ListClickListener listener) {
         clickListener = listener;
+    }
+    
+    public void SetData(int cat, List<Recommend.AppCategory> categories, boolean show) {
+        myCategory = cat;
+        appCategories = categories;
+        showDot = show;
+
+        InitializeData();
     }
 
 }

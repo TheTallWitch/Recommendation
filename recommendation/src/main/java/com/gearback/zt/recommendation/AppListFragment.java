@@ -24,9 +24,9 @@ public class AppListFragment extends Fragment {
     TextView noApps, appCategory;
     TextView backBtn;
     AppAdapter adapter;
-    ApplicationData applicationData;
     List<Recommend.SimilarApp> apps = new ArrayList<>();
     Recommend.BackListener backListener = null;
+    AppDataBaseHelper appDataBaseHelper = null;
 
     //name, category
 
@@ -37,7 +37,6 @@ public class AppListFragment extends Fragment {
         noApps = view.findViewById(R.id.noApps);
         backBtn = view.findViewById(R.id.backBtn);
         appCategory = view.findViewById(R.id.appCategory);
-        applicationData = (ApplicationData) getActivity().getApplication();
         noApps.setTypeface(noApps.getTypeface(), Typeface.ITALIC);
         appCategory.setText(getArguments().getString("name"));
 
@@ -57,11 +56,11 @@ public class AppListFragment extends Fragment {
 
     public void UpdateList() {
         try {
-            if (applicationData.appDataBaseHelper == null) {
-                applicationData.appDataBaseHelper = new AppDataBaseHelper(getActivity());
+            if (appDataBaseHelper == null) {
+                appDataBaseHelper = new AppDataBaseHelper(getActivity());
             }
-            applicationData.appDataBaseHelper.opendatabase();
-            apps = applicationData.appDataBaseHelper.getApps(getArguments().getInt("category"));
+            appDataBaseHelper.opendatabase();
+            apps = appDataBaseHelper.getApps(getArguments().getInt("category"));
         }
         catch (IOException e) {
             e.printStackTrace();
