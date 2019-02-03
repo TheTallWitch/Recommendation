@@ -132,7 +132,7 @@ public class Recommend {
             }
         }
     }
-    public void FetchApps(final Context context, final FetchAppResult listener) {
+    public void FetchApps(final Context context) {
         CheckDate(context);
         HttpGetRequest getRequest = new HttpGetRequest(null, new HttpGetRequest.TaskListener() {
             @Override
@@ -172,8 +172,6 @@ public class Recommend {
                                 }
                             }
                         }
-
-                        SortCategories(appCategories, myCategory, context, listener);
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
@@ -182,32 +180,6 @@ public class Recommend {
             }
         });
         getRequest.execute("https://www.zodtond.com/app_upload/applications/appintro/API/intro/default.aspx?os=android", "");
-    }
-
-    public void SortCategories(List<AppCategory> appCategories, int myCategory, Context context, FetchAppResult listener) {
-        AppCategory mainCat = null;
-        for (int i = 0; i < appCategories.size(); i++) {
-            if (appCategories.get(i).getId() == myCategory) {
-                mainCat = appCategories.get(i);
-                appCategories.remove(i);
-                break;
-            }
-        }
-        appCategories.add(0, mainCat);
-
-        try {
-            if (appDataBaseHelper == null) {
-                appDataBaseHelper = new AppDataBaseHelper(context);
-            }
-            for (int i = 0; i < appCategories.size(); i++) {
-                appCategories.get(i).setApps(appDataBaseHelper.getApps(appCategories.get(i).getId()));
-            }
-
-            listener.onResult(myCategory, appCategories);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     
     public void SetAppToken(String token) {
