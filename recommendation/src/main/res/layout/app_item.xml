@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:gravity="center">
+    <ImageView
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:id="@+id/appIcon"/>
+    <com.gearback.custom.CustomFontTextView
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:textSize="@dimen/small_text"
+        android:textColor="@color/darkText"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:id="@+id/appName"/>
+</LinearLayout>
