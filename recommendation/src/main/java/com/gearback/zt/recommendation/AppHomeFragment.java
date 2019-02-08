@@ -76,30 +76,21 @@ public class AppHomeFragment extends Fragment {
             }
         });
 
-        return view;
-    }
-
-    public Bitmap invertImage(Bitmap src) {
-        Bitmap bmOut = Bitmap.createBitmap(src.getWidth(), src.getHeight(), src.getConfig());
-        int A, R, G, B;
-        int pixelColor;
-        int height = src.getHeight();
-        int width = src.getWidth();
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                pixelColor = src.getPixel(x, y);
-                A = Color.alpha(pixelColor);
-                R = 255 - Color.red(pixelColor);
-                G = 255 - Color.green(pixelColor);
-                B = 255 - Color.blue(pixelColor);
-                bmOut.setPixel(x, y, Color.argb(A, R, G, B));
+        appLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(getString(R.string.ad_domain)));
+                try {
+                    startActivity(intent);
+                }
+                catch (ActivityNotFoundException e) {
+                    Log.d("Error", e.toString());
+                }
             }
-        }
+        });
 
-        return bmOut;
+        return view;
     }
 
     public void InitializeData() {
