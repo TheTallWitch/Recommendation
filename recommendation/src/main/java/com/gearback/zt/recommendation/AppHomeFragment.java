@@ -3,6 +3,9 @@ package com.gearback.zt.recommendation;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.ColorMatrixColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +34,7 @@ public class AppHomeFragment extends Fragment {
     TextView backBtn;
     RecyclerView itemList;
     AppCategoryAdapter adapter;
+    ImageView appLogo;
 
     Recommend.SimilarApp promoteApp = null;
     Methods methods = new Methods();
@@ -41,14 +46,26 @@ public class AppHomeFragment extends Fragment {
     int myCategory = 0;
     boolean showDot = false;
     List<Recommend.AppCategory> appCategories = new ArrayList<>();
+    private static final float[] NEGATIVE = {
+            -1.0f,     0,     0,    0, 255, // red
+            0, -1.0f,     0,    0, 255, // green
+            0,     0, -1.0f,    0, 255, // blue
+            0,     0,     0, 1.0f,   0  // alpha
+    };
 
-    //app token
+    //app token, negate, alpha
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.app_home_fragment, container, false);
         backBtn = view.findViewById(R.id.backBtn);
         itemList = view.findViewById(R.id.itemList);
+        appLogo = view.findViewById(R.id.appLogo);
+
+        if (getArguments().getBoolean("negate")) {
+            NEGATIVE[18] = getArguments().getFloat("alpha");
+            appLogo.setColorFilter(new ColorMatrixColorFilter(NEGATIVE));
+        }
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +77,29 @@ public class AppHomeFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public Bitmap invertImage(Bitmap src) {
+        Bitmap bmOut = Bitmap.createBitmap(src.getWidth(), src.getHeight(), src.getConfig());
+        int A, R, G, B;
+        int pixelColor;
+        int height = src.getHeight();
+        int width = src.getWidth();
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                pixelColor = src.getPixel(x, y);
+                A = Color.alpha(pixelColor);
+                R = 255 - Color.red(pixelColor);
+                G = 255 - Color.green(pixelColor);
+                B = 255 - Color.blue(pixelColor);
+                bmOut.setPixel(x, y, Color.argb(A, R, G, B));
+            }
+        }
+
+        return bmOut;
     }
 
     public void InitializeData() {

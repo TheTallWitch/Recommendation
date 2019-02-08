@@ -17,6 +17,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:adjustViewBounds="true"
+            android:id="@+id/appLogo"
             android:src="@drawable/zodtond"/>
         <LinearLayout
             android:layout_width="0dp"
