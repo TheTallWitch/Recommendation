@@ -62,7 +62,7 @@ public class AppHomeFragment extends Fragment {
         itemList = view.findViewById(R.id.itemList);
         appLogo = view.findViewById(R.id.appLogo);
 
-        if (getArguments().getBoolean("negate")) {
+        if (getArguments().getBoolean("negate", false)) {
             NEGATIVE[18] = getArguments().getFloat("alpha");
             appLogo.setColorFilter(new ColorMatrixColorFilter(NEGATIVE));
         }
