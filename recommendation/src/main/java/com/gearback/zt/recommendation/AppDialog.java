@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gearback.methods.Methods;
@@ -58,13 +57,13 @@ public class AppDialog extends DialogFragment {
         if (getArguments().getString("token").equals("")) {
             appBtn.setVisibility(View.GONE);
             appDescription.setVisibility(View.GONE);
-            acceptBtn.setText(getString(R.string.continue_dialog));
+            acceptBtn.setText(getString(R.string.rec_continue_dialog));
             rejectBtn.setVisibility(View.GONE);
         }
         else {
             appBtn.setVisibility(View.VISIBLE);
             appDescription.setVisibility(View.VISIBLE);
-            acceptBtn.setText(getString(R.string.download));
+            acceptBtn.setText(getString(R.string.rec_download));
             rejectBtn.setVisibility(View.VISIBLE);
 
             try {

@@ -12,7 +12,7 @@
         android:paddingRight="24dp"
         android:paddingTop="24dp"
         android:paddingBottom="20dp"
-        android:text="@string/recommend_app"
+        android:text="@string/rec_recommend_app"
         android:textColor="@color/darkText"
         android:textSize="@dimen/xxlarge_text"
         android:gravity="center_vertical"/>
@@ -74,7 +74,7 @@
         <com.gearback.custom.CustomFontTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/recommend_app_desc"
+            android:text="@string/rec_recommend_app_desc"
             android:textSize="@dimen/small_text"
             android:textColor="@color/darkText" />
     </LinearLayout>
@@ -86,7 +86,7 @@
         android:paddingRight="16dp"
         android:layout_marginBottom="8dp">
         <com.gearback.custom.CustomFontTextView
-            android:text="@string/download"
+            android:text="@string/rec_download"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:minWidth="48dp"
@@ -96,7 +96,7 @@
             android:textColor="@color/green"
             android:background="@color/transparent" />
         <com.gearback.custom.CustomFontTextView
-            android:text="@string/skip"
+            android:text="@string/rec_skip"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginLeft="16dp"

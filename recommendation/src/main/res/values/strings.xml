@@ -1,16 +1,16 @@
 <resources>
-    <string name="app_name">recommendation</string>
-    <string name="ad_domain">https://www.zodtond.com/</string>
+    <string name="rec_app_name">recommendation</string>
+    <string name="rec_ad_domain">https://www.zodtond.com/</string>
     <string name="appsIcon">&#xe5c3;</string>
     <string name="circleIcon">&#xe061;</string>
     <string name="backIcon">&#xE5C8;</string>
-    <string name="show_more">نمایش برنامه های بیشتر</string>
-    <string name="no_apps">برنامه ای برای نمایش وجود ندارد</string>
-    <string name="download">دانلود</string>
-    <string name="recommend_app">معرفی برنامه</string>
-    <string name="recommend_app_desc">تمام اعتبار نرم افزارهای زودتند، کاربران آن هستند. از اینکه از نرم افزار های ما استفاده می کنید، متشکریم. لطفا برای حمایت بیشتر از ما، نرم افزار های دیگر ما را نیز امتحان کنید.</string>
-    <string name="skip">بیخیال</string>
-    <string name="more">بیشتر</string>
-    <string name="other_apps">سایر نرم افزارها</string>
-    <string name="continue_dialog">ادامه</string>
+    <string name="rec_show_more">نمایش برنامه های بیشتر</string>
+    <string name="rec_no_apps">برنامه ای برای نمایش وجود ندارد</string>
+    <string name="rec_download">دانلود</string>
+    <string name="rec_recommend_app">معرفی برنامه</string>
+    <string name="rec_recommend_app_desc">تمام اعتبار نرم افزارهای زودتند، کاربران آن هستند. از اینکه از نرم افزار های ما استفاده می کنید، متشکریم. لطفا برای حمایت بیشتر از ما، نرم افزار های دیگر ما را نیز امتحان کنید.</string>
+    <string name="rec_skip">بیخیال</string>
+    <string name="rec_more">بیشتر</string>
+    <string name="rec_other_apps">سایر نرم افزارها</string>
+    <string name="rec_continue_dialog">ادامه</string>
 </resources>

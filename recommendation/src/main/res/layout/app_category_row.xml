@@ -10,7 +10,7 @@
         android:id="@+id/appHeaderText"
         android:textColor="@color/grayText"
         android:textSize="@dimen/normal_text"
-        android:text="@string/other_apps"
+        android:text="@string/rec_other_apps"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:layout_marginRight="24dp"
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/green"
                     android:textSize="@dimen/normal_text"
-                    android:text="@string/more"/>
+                    android:text="@string/rec_more"/>
                 <com.gearback.custom.CustomFontTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
