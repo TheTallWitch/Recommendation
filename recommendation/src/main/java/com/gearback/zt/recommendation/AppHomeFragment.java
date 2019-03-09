@@ -3,6 +3,7 @@ package com.gearback.zt.recommendation;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.ColorMatrixColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
@@ -59,6 +60,8 @@ public class AppHomeFragment extends Fragment {
         if (getArguments().getBoolean("negate", false)) {
             NEGATIVE[18] = getArguments().getFloat("alpha");
             appLogo.setColorFilter(new ColorMatrixColorFilter(NEGATIVE));
+            backBtn.setTextColor(Color.BLACK);
+            backBtn.setAlpha(getArguments().getFloat("alpha"));
         }
 
         backBtn.setOnClickListener(new View.OnClickListener() {

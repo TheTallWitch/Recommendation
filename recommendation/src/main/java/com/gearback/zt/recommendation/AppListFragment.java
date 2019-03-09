@@ -2,6 +2,8 @@ package com.gearback.zt.recommendation;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,7 +30,7 @@ public class AppListFragment extends Fragment {
     Recommend.BackListener backListener = null;
     AppDataBaseHelper appDataBaseHelper = null;
 
-    //name, category
+    //name, category, negate, alpha
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +41,11 @@ public class AppListFragment extends Fragment {
         appCategory = view.findViewById(R.id.appCategory);
         noApps.setTypeface(noApps.getTypeface(), Typeface.ITALIC);
         appCategory.setText(getArguments().getString("name"));
+
+        if (getArguments().getBoolean("negate", false)) {
+            backBtn.setTextColor(Color.BLACK);
+            backBtn.setAlpha(getArguments().getFloat("alpha"));
+        }
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
