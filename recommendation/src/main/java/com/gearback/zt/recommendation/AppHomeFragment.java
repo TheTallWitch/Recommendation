@@ -138,7 +138,9 @@ public class AppHomeFragment extends Fragment {
                 break;
             }
         }
-        appCategories.add(0, mainCat);
+        if (mainCat != null) {
+            appCategories.add(0, mainCat);
+        }
 
         try {
             if (appDataBaseHelper == null) {
