@@ -54,6 +54,9 @@ public class AppDialog extends DialogFragment {
         acceptBtn = view.findViewById(R.id.setDialogBtn);
         rejectBtn = view.findViewById(R.id.closeDialogBtn);
 
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getDialog().getWindow().getAttributes().windowAnimations = R.style.fade_animation;
+
         if (getArguments().getString("token").equals("")) {
             appBtn.setVisibility(View.GONE);
             appDescription.setVisibility(View.GONE);
@@ -129,13 +132,6 @@ public class AppDialog extends DialogFragment {
     
     public void SetData(List<Recommend.AppCategory> appCategories) {
         this.appCategories = appCategories;
-    }
-    
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        getDialog().getWindow().getAttributes().windowAnimations = R.style.fade_animation;
-        super.onActivityCreated(savedInstanceState);
     }
 
     @Override

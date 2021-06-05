@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Recommendation.iml" filepath="$PROJECT_DIR$/Recommendation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/recommendation/recommendation.iml" filepath="$PROJECT_DIR$/recommendation/recommendation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Recommendation.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Recommendation.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/recommendation/Recommendation.recommendation.iml" filepath="$PROJECT_DIR$/.idea/modules/recommendation/Recommendation.recommendation.iml" />
     </modules>
   </component>
 </project>
