@@ -1,15 +1,14 @@
 package com.gearback.zt.recommendation;
 
 import android.app.Activity;
-import android.support.v7.widget.ListPopupWindow;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.widget.ListPopupWindow;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+
 import com.squareup.picasso.Picasso;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
