@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:id="@+id/graph">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph">
+    <fragment
+        android:id="@+id/app_home_fragment"
+        android:name="com.gearback.zt.recommendation.AppHomeFragment"
+        android:label="appHomeFragment" />
+    <fragment
+        android:id="@+id/app_list_fragment"
+        android:name="com.gearback.zt.recommendation.AppListFragment"
+        android:label="appListFragment" />
 </navigation>
