@@ -6,9 +6,20 @@
     <fragment
         android:id="@+id/app_home_fragment"
         android:name="com.gearback.zt.recommendation.AppHomeFragment"
-        android:label="appHomeFragment" />
+        android:label="appHomeFragment" >
+        <action
+            android:id="@+id/action_app_home_fragment_to_app_list_fragment"
+            app:destination="@id/app_list_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/app_list_fragment"
         android:name="com.gearback.zt.recommendation.AppListFragment"
-        android:label="appListFragment" />
+        android:label="appListFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
 </navigation>
