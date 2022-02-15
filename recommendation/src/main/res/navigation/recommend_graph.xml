@@ -10,6 +10,15 @@
         <action
             android:id="@+id/action_app_home_fragment_to_app_list_fragment"
             app:destination="@id/app_list_fragment" />
+        <argument
+            android:name="token"
+            app:argType="string" />
+        <argument
+            android:name="negate"
+            app:argType="boolean" />
+        <argument
+            android:name="alpha"
+            app:argType="float" />
     </fragment>
     <fragment
         android:id="@+id/app_list_fragment"
