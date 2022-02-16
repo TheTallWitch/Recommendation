@@ -8,6 +8,7 @@ import android.graphics.ColorMatrixColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,33 +58,27 @@ public class AppHomeFragment extends Fragment {
         itemList = view.findViewById(R.id.itemList);
         appLogo = view.findViewById(R.id.appLogo);
 
-        if (getArguments().getBoolean("negate", false)) {
+        if (getArguments() != null && getArguments().getBoolean("negate", false)) {
             NEGATIVE[18] = getArguments().getFloat("alpha");
             appLogo.setColorFilter(new ColorMatrixColorFilter(NEGATIVE));
             backBtn.setTextColor(Color.BLACK);
             backBtn.setAlpha(getArguments().getFloat("alpha"));
         }
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (backListener != null) {
-                    backListener.onBack();
-                }
+        backBtn.setOnClickListener(v -> {
+            if (backListener != null) {
+                backListener.onBack();
             }
         });
 
-        appLogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(getString(R.string.rec_ad_domain)));
-                try {
-                    startActivity(intent);
-                }
-                catch (ActivityNotFoundException e) {
-                    Log.d("Error", e.toString());
-                }
+        appLogo.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(getString(R.string.rec_ad_domain)));
+            try {
+                startActivity(intent);
+            }
+            catch (ActivityNotFoundException e) {
+                Log.d("Error", e.toString());
             }
         });
 
@@ -97,7 +92,9 @@ public class AppHomeFragment extends Fragment {
             if (appDataBaseHelper == null) {
                 appDataBaseHelper = new AppDataBaseHelper(getActivity());
             }
-            promoteApp = appDataBaseHelper.getPromoteApp(myCategory, getArguments().getString("token"));
+            if (getArguments() != null) {
+                promoteApp = appDataBaseHelper.getPromoteApp(myCategory, getArguments().getString("token"));
+            }
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -115,12 +112,12 @@ public class AppHomeFragment extends Fragment {
 
                 AppDialog appDialog = AppDialog.newInstance(promoteApp.getToken());
                 appDialog.SetData(appCategories);
-                appDialog.show(getActivity().getSupportFragmentManager(), "appDialog");
+                appDialog.show(requireActivity().getSupportFragmentManager(), "appDialog");
             }
             else {
                 AppDialog appDialog = AppDialog.newInstance("");
                 appDialog.SetData(appCategories);
-                appDialog.show(getActivity().getSupportFragmentManager(), "appDialog");
+                appDialog.show(requireActivity().getSupportFragmentManager(), "appDialog");
             }
 
 
@@ -144,16 +141,16 @@ public class AppHomeFragment extends Fragment {
 
         try {
             if (appDataBaseHelper == null) {
-                appDataBaseHelper = new AppDataBaseHelper(getActivity());
+                appDataBaseHelper = new AppDataBaseHelper(requireActivity());
             }
             for (int i = 0; i < appCategories.size(); i++) {
                 appCategories.get(i).setApps(appDataBaseHelper.getApps(appCategories.get(i).getId()));
             }
 
-            LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+            LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(requireActivity());
             itemList.setLayoutManager(mLinearLayoutManager);
 
-            adapter = new AppCategoryAdapter(getActivity(), appCategories, new AppCategoryAdapter.OnItemClickListener() {
+            adapter = new AppCategoryAdapter(requireActivity(), appCategories, new AppCategoryAdapter.OnItemClickListener() {
                 @Override
                 public void onCategoryClick(int position) {
                     if (clickListener != null) {

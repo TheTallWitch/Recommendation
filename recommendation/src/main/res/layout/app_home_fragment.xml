@@ -8,7 +8,7 @@
     tools:context=".AppHomeFragment">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="56dp"
         android:orientation="horizontal"
         android:background="@color/colorPrimary"
         android:gravity="center_vertical">
@@ -22,11 +22,11 @@
             android:src="@drawable/zodtond_logo"/>
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"/>
         <com.gearback.custom.MaterialIconTextView
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
             android:textSize="@dimen/normal_icon_size"
             android:textColor="@color/white"
             android:text="@string/backIcon"
@@ -35,7 +35,8 @@
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginTop="8dp"
         android:id="@+id/itemList"/>
 </LinearLayout>

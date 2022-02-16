@@ -2,11 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/graph">
+    android:id="@+id/recommend_graph">
     <fragment
         android:id="@+id/app_home_fragment"
         android:name="com.gearback.zt.recommendation.AppHomeFragment"
-        android:label="appHomeFragment" >
+        android:label="appHomeFragment"
+        tools:layout="@layout/app_home_fragment">
         <action
             android:id="@+id/action_app_home_fragment_to_app_list_fragment"
             app:destination="@id/app_list_fragment" />
@@ -23,7 +24,8 @@
     <fragment
         android:id="@+id/app_list_fragment"
         android:name="com.gearback.zt.recommendation.AppListFragment"
-        android:label="appListFragment" >
+        android:label="appListFragment"
+        tools:layout="@layout/app_list_fragment">
         <argument
             android:name="id"
             app:argType="integer" />
