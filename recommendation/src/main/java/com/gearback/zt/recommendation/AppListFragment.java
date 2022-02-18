@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -46,14 +47,7 @@ public class AppListFragment extends Fragment {
             backBtn.setAlpha(getArguments().getFloat("alpha"));
         }
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (backListener != null) {
-                    backListener.onBack();
-                }
-            }
-        });
+        backBtn.setOnClickListener(v -> Navigation.findNavController(requireView()).navigateUp() );
 
         UpdateList();
 
@@ -66,7 +60,7 @@ public class AppListFragment extends Fragment {
                 appDataBaseHelper = new AppDataBaseHelper(getActivity());
             }
             appDataBaseHelper.opendatabase();
-            apps = appDataBaseHelper.getApps(getArguments().getInt("category"));
+            apps = appDataBaseHelper.getApps(getArguments().getInt("id"));
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -78,17 +72,14 @@ public class AppListFragment extends Fragment {
             LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
             itemList.setLayoutManager(mLinearLayoutManager);
 
-            adapter = new AppAdapter(getActivity(), getArguments().getString("name"), apps, new AppAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(apps.get(position).getUrl()));
-                    try {
-                        startActivity(intent);
-                    }
-                    catch (ActivityNotFoundException e) {
-                        Log.d("Error", e.toString());
-                    }
+            adapter = new AppAdapter(getActivity(), getArguments().getString("name"), apps, position -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(apps.get(position).getUrl()));
+                try {
+                    startActivity(intent);
+                }
+                catch (ActivityNotFoundException e) {
+                    Log.d("Error", e.toString());
                 }
             });
             itemList.setAdapter(adapter);

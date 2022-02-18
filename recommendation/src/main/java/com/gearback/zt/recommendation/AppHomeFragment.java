@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gearback.methods.Methods;
@@ -31,17 +34,18 @@ public class AppHomeFragment extends Fragment {
     RecyclerView itemList;
     AppCategoryAdapter adapter;
     ImageView appLogo;
+    ProgressBar progressBar;
 
     Recommend.SimilarApp promoteApp = null;
     Methods methods = new Methods();
     AppDataBaseHelper appDataBaseHelper = null;
+    RecommendSingleton singleton = null;
 
     Recommend.BackListener backListener = null;
     Recommend.ListClickListener clickListener = null;
     
     int myCategory = 0;
     boolean showDot = false;
-    List<Recommend.AppCategory> appCategories = new ArrayList<>();
     private static final float[] NEGATIVE = {
             -1.0f,     0,     0,    0, 255, // red
             0, -1.0f,     0,    0, 255, // green
@@ -57,6 +61,9 @@ public class AppHomeFragment extends Fragment {
         backBtn = view.findViewById(R.id.backBtn);
         itemList = view.findViewById(R.id.itemList);
         appLogo = view.findViewById(R.id.appLogo);
+        progressBar = view.findViewById(R.id.progressBar);
+        
+        singleton = RecommendSingleton.getInstance();
 
         if (getArguments() != null && getArguments().getBoolean("negate", false)) {
             NEGATIVE[18] = getArguments().getFloat("alpha");
@@ -65,11 +72,10 @@ public class AppHomeFragment extends Fragment {
             backBtn.setAlpha(getArguments().getFloat("alpha"));
         }
 
-        backBtn.setOnClickListener(v -> {
-            if (backListener != null) {
-                backListener.onBack();
-            }
-        });
+        myCategory = getArguments().getInt("cat");
+        showDot = getArguments().getBoolean("showDot");
+
+        backBtn.setOnClickListener(v -> Navigation.findNavController(requireView()).navigateUp() );
 
         appLogo.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -81,6 +87,20 @@ public class AppHomeFragment extends Fragment {
                 Log.d("Error", e.toString());
             }
         });
+
+        Recommend recommend = new Recommend();
+
+        if (singleton.appCategories.size() == 0) {
+            progressBar.setVisibility(View.VISIBLE);
+            recommend.FetchApps(getContext(), (cat, list) -> {
+                progressBar.setVisibility(View.GONE);
+                singleton.appCategories = list;
+                InitializeData();
+            });
+        }
+        else {
+            InitializeData();
+        }
 
         return view;
     }
@@ -111,12 +131,12 @@ public class AppHomeFragment extends Fragment {
                 appDataBaseHelper.updateApp(promoteApp);
 
                 AppDialog appDialog = AppDialog.newInstance(promoteApp.getToken());
-                appDialog.SetData(appCategories);
+                appDialog.SetData(singleton.appCategories);
                 appDialog.show(requireActivity().getSupportFragmentManager(), "appDialog");
             }
             else {
                 AppDialog appDialog = AppDialog.newInstance("");
-                appDialog.SetData(appCategories);
+                appDialog.SetData(singleton.appCategories);
                 appDialog.show(requireActivity().getSupportFragmentManager(), "appDialog");
             }
 
@@ -128,34 +148,33 @@ public class AppHomeFragment extends Fragment {
 
     public void SortCategories() {
         Recommend.AppCategory mainCat = null;
-        for (int i = 0; i < appCategories.size(); i++) {
-            if (appCategories.get(i).getId() == myCategory) {
-                mainCat = appCategories.get(i);
-                appCategories.remove(i);
+        for (int i = 0; i < singleton.appCategories.size(); i++) {
+            if (singleton.appCategories.get(i).getId() == myCategory) {
+                mainCat = singleton.appCategories.get(i);
+                singleton.appCategories.remove(i);
                 break;
             }
         }
         if (mainCat != null) {
-            appCategories.add(0, mainCat);
+            singleton.appCategories.add(0, mainCat);
         }
 
         try {
             if (appDataBaseHelper == null) {
                 appDataBaseHelper = new AppDataBaseHelper(requireActivity());
             }
-            for (int i = 0; i < appCategories.size(); i++) {
-                appCategories.get(i).setApps(appDataBaseHelper.getApps(appCategories.get(i).getId()));
+            for (int i = 0; i < singleton.appCategories.size(); i++) {
+                singleton.appCategories.get(i).setApps(appDataBaseHelper.getApps(singleton.appCategories.get(i).getId()));
             }
 
             LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(requireActivity());
             itemList.setLayoutManager(mLinearLayoutManager);
 
-            adapter = new AppCategoryAdapter(requireActivity(), appCategories, new AppCategoryAdapter.OnItemClickListener() {
+            adapter = new AppCategoryAdapter(requireActivity(), singleton.appCategories, new AppCategoryAdapter.OnItemClickListener() {
                 @Override
                 public void onCategoryClick(int position) {
-                    if (clickListener != null) {
-                        clickListener.onClick(appCategories.get(position).getId(), appCategories.get(position).getName());
-                    }
+                    NavDirections action = AppHomeFragmentDirections.actionAppHomeFragmentToAppListFragment(singleton.appCategories.get(position).getId(), singleton.appCategories.get(position).getName(), getArguments().getBoolean("negate", false), getArguments().getFloat("alpha"));
+                    Navigation.findNavController(requireView()).navigate(action);
                 }
 
                 @Override
@@ -176,21 +195,4 @@ public class AppHomeFragment extends Fragment {
             e.printStackTrace();
         }
     }
-
-    public void SetBackListener(Recommend.BackListener listener) {
-        backListener = listener;
-    }
-
-    public void SetClickListener(Recommend.ListClickListener listener) {
-        clickListener = listener;
-    }
-    
-    public void SetData(int cat, List<Recommend.AppCategory> categories, boolean show) {
-        myCategory = cat;
-        appCategories = categories;
-        showDot = show;
-
-        InitializeData();
-    }
-
 }

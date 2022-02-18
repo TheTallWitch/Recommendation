@@ -39,7 +39,7 @@ public class AppPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final Recommend.AppPreviewViewHolder viewHolder = (Recommend.AppPreviewViewHolder) holder;
         final Recommend.SimilarApp item = mainItems.get(position);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

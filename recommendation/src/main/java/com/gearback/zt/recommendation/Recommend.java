@@ -2,6 +2,8 @@ package com.gearback.zt.recommendation;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -139,7 +141,7 @@ public class Recommend {
                         JSONObject mainObject = new JSONObject(result);
                         JSONArray categories = mainObject.getJSONArray("categories");
                         JSONArray apps = mainObject.getJSONArray("apps");
-                        List<AppCategory> appCategories = new ArrayList<>();
+                        List<Recommend.AppCategory> appCategories = new ArrayList<>();
                         int myCategory = 0;
                         for (int i = 0; i < categories.length(); i++) {
                             JSONObject item = categories.getJSONObject(i);
@@ -181,7 +183,7 @@ public class Recommend {
         getRequest.execute("https://www.zodtond.com/app_upload/applications/appintro/API/intro/default.aspx?os=android", "");
     }
 
-    public void SortCategories(List<AppCategory> appCategories, int myCategory, Context context, FetchAppResult listener) {
+    public void SortCategories(List<Recommend.AppCategory> appCategories, int myCategory, Context context, FetchAppResult listener) {
         AppCategory mainCat = null;
         for (int i = 0; i < appCategories.size(); i++) {
             if (appCategories.get(i).getId() == myCategory) {
@@ -212,7 +214,7 @@ public class Recommend {
     }
 
     public interface FetchAppResult {
-        public void onResult(int myCategory, List<AppCategory> appCategories);
+        public void onResult(int myCategory, List<Recommend.AppCategory> appCategories);
     }
 
     public interface CheckDateListener {
@@ -261,7 +263,7 @@ public class Recommend {
         public void setDate(String date) {this.date = date;}
     }
 
-    public class AppCategory {
+    public static class AppCategory {
         private int id;
         private String name;
         private List<SimilarApp> apps;

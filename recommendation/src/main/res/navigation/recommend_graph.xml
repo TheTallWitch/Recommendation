@@ -2,17 +2,28 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/recommend_graph">
+    android:id="@+id/recommend_graph"
+    app:startDestination="@id/appHomeFragment">
+
     <fragment
-        android:id="@+id/app_home_fragment"
+        android:id="@+id/appHomeFragment"
         android:name="com.gearback.zt.recommendation.AppHomeFragment"
-        android:label="appHomeFragment"
-        tools:layout="@layout/app_home_fragment">
+        android:label="app_home_fragment"
+        tools:layout="@layout/app_home_fragment" >
         <action
-            android:id="@+id/action_app_home_fragment_to_app_list_fragment"
-            app:destination="@id/app_list_fragment" />
+            android:id="@+id/action_appHomeFragment_to_appListFragment"
+            app:destination="@id/appListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/appListFragment"
+        android:name="com.gearback.zt.recommendation.AppListFragment"
+        android:label="app_list_fragment"
+        tools:layout="@layout/app_list_fragment" >
         <argument
-            android:name="token"
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="name"
             app:argType="string" />
         <argument
             android:name="negate"
@@ -20,17 +31,5 @@
         <argument
             android:name="alpha"
             app:argType="float" />
-    </fragment>
-    <fragment
-        android:id="@+id/app_list_fragment"
-        android:name="com.gearback.zt.recommendation.AppListFragment"
-        android:label="appListFragment"
-        tools:layout="@layout/app_list_fragment">
-        <argument
-            android:name="id"
-            app:argType="integer" />
-        <argument
-            android:name="name"
-            app:argType="string" />
     </fragment>
 </navigation>
