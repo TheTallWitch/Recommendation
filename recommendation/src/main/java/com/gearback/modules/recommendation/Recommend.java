@@ -28,10 +28,9 @@ public class Recommend {
     
     private Methods methods = new Methods();
     private AppDataBaseHelper appDataBaseHelper = null;
-    private String appToken = "";
     private boolean showDot = false;
 
-    public void CheckDate(Context context) {
+    public void CheckDate(Context context, String appToken) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String lastDate = preferences.getString("LAST_PROMOTE_DATE", "");
         int myCategory = preferences.getInt("MY_CATEGORY", -1);
@@ -76,7 +75,7 @@ public class Recommend {
             }
         }
     }
-    public void CheckDate(Context context, CheckDateListener listener) {
+    public void CheckDate(Context context, String appToken, CheckDateListener listener) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String lastDate = preferences.getString("LAST_PROMOTE_DATE", "");
         int myCategory = preferences.getInt("MY_CATEGORY", -1);
@@ -129,8 +128,8 @@ public class Recommend {
             }
         }
     }
-    public void FetchApps(final Context context, final FetchAppResult listener) {
-        CheckDate(context);
+    public void FetchApps(final Context context, String appToken, final FetchAppResult listener) {
+        CheckDate(context, appToken);
         HttpGetRequest getRequest = new HttpGetRequest(null, new HttpGetRequest.TaskListener() {
             @Override
             public void onFinished(String result) {
@@ -205,10 +204,6 @@ public class Recommend {
         catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    
-    public void SetAppToken(String token) {
-        appToken = token;
     }
 
     public interface FetchAppResult {

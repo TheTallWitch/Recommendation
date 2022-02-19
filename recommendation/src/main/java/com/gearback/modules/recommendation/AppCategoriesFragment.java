@@ -33,6 +33,7 @@ public class AppCategoriesFragment extends Fragment {
     AppCategoryAdapter adapter;
     ImageView appLogo;
     ProgressBar progressBar;
+    String appToken = "";
 
     Recommend.SimilarApp promoteApp = null;
     Methods methods = new Methods();
@@ -70,6 +71,7 @@ public class AppCategoriesFragment extends Fragment {
             backBtn.setAlpha(getArguments().getFloat("alpha"));
         }
 
+        appToken = getArguments().getString("token");
         myCategory = getArguments().getInt("cat");
         showDot = getArguments().getBoolean("showDot");
 
@@ -90,7 +92,7 @@ public class AppCategoriesFragment extends Fragment {
 
         if (singleton.appCategories.size() == 0) {
             progressBar.setVisibility(View.VISIBLE);
-            recommend.FetchApps(getContext(), (cat, list) -> {
+            recommend.FetchApps(getContext(), appToken, (cat, list) -> {
                 progressBar.setVisibility(View.GONE);
                 singleton.appCategories = list;
                 InitializeData();
