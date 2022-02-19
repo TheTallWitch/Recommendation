@@ -27,7 +27,7 @@ import com.gearback.methods.Methods;
 import java.io.IOException;
 import java.util.Calendar;
 
-public class AppHomeFragment extends Fragment {
+public class AppCategoriesFragment extends Fragment {
     TextView backBtn;
     RecyclerView itemList;
     AppCategoryAdapter adapter;
@@ -171,7 +171,7 @@ public class AppHomeFragment extends Fragment {
             adapter = new AppCategoryAdapter(requireActivity(), singleton.appCategories, new AppCategoryAdapter.OnItemClickListener() {
                 @Override
                 public void onCategoryClick(int position) {
-                    NavDirections action = AppHomeFragmentDirections.actionAppHomeFragmentToAppListFragment(singleton.appCategories.get(position).getId(), singleton.appCategories.get(position).getName(), getArguments().getBoolean("negate", false), getArguments().getFloat("alpha"));
+                    NavDirections action = AppCategoriesFragmentDirections.actionAppHomeFragmentToAppListFragment(singleton.appCategories.get(position).getId(), singleton.appCategories.get(position).getName(), getArguments().getBoolean("negate", false), getArguments().getFloat("alpha"));
                     Navigation.findNavController(requireView()).navigate(action);
                 }
 
