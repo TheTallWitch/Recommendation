@@ -1,9 +1,7 @@
-package com.gearback.zt.recommendation;
+package com.gearback.modules.recommendation;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 
 import androidx.recyclerview.widget.RecyclerView;

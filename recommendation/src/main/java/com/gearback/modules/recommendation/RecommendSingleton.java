@@ -1,8 +1,5 @@
-package com.gearback.zt.recommendation;
+package com.gearback.modules.recommendation;
 
-import android.content.Context;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

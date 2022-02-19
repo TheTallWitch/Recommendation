@@ -1,6 +1,7 @@
-package com.gearback.zt.recommendation;
+package com.gearback.modules.recommendation;
 
 import android.app.Activity;
+
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,16 +11,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AppPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Recommend.SimilarApp> mainItems;
     private Activity activity;
     private Recommend classes = new Recommend();
     private OnItemClickListener listener;
+    private String categoryName;
 
-    public AppPreviewAdapter(Activity a, List<Recommend.SimilarApp> list, OnItemClickListener listener) {
+    public AppAdapter(Activity a, String categoryName, List<Recommend.SimilarApp> list, OnItemClickListener listener) {
         mainItems = list;
         activity = a;
         this.listener = listener;
+        this.categoryName = categoryName;
     }
 
     @Override
@@ -34,13 +37,13 @@ public class AppPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.app_item, parent, false);
-        return classes.new AppPreviewViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.app_row, parent, false);
+        return classes.new AppViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final Recommend.AppPreviewViewHolder viewHolder = (Recommend.AppPreviewViewHolder) holder;
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        final Recommend.AppViewHolder viewHolder = (Recommend.AppViewHolder) holder;
         final Recommend.SimilarApp item = mainItems.get(position);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +52,9 @@ public class AppPreviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
         });
         viewHolder.name.setText(item.getName());
+        viewHolder.description.setText(item.getDescription());
         Picasso.with(activity).load(item.getIcon()).into(viewHolder.icon);
+        viewHolder.category.setText(categoryName);
     }
 
     public interface OnItemClickListener {

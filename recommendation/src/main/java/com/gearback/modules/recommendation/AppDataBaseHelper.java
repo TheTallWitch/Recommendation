@@ -1,4 +1,4 @@
-package com.gearback.zt.recommendation;
+package com.gearback.modules.recommendation;
 
 import android.content.ContentValues;
 import android.content.Context;

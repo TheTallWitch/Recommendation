@@ -1,4 +1,4 @@
-package com.gearback.zt.recommendation;
+package com.gearback.modules.recommendation;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;

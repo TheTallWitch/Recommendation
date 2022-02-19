@@ -4,7 +4,7 @@ apply plugin: 'androidx.navigation.safeargs'
 android {
     compileSdkVersion 32
     defaultConfig {
-        applicationId "com.gearback.zt.recommendation"
+        applicationId "com.gearback.modules.recommendation"
         minSdkVersion 14
         targetSdkVersion 32
         versionCode 1

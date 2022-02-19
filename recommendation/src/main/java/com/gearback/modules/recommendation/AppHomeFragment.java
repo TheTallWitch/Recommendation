@@ -1,4 +1,4 @@
-package com.gearback.zt.recommendation;
+package com.gearback.modules.recommendation;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -25,9 +25,7 @@ import android.widget.TextView;
 import com.gearback.methods.Methods;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class AppHomeFragment extends Fragment {
     TextView backBtn;
