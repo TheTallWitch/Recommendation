@@ -39,9 +39,6 @@ public class AppCategoriesFragment extends Fragment {
     Methods methods = new Methods();
     AppDataBaseHelper appDataBaseHelper = null;
     RecommendSingleton singleton = null;
-
-    Recommend.BackListener backListener = null;
-    Recommend.ListClickListener clickListener = null;
     
     int myCategory = 0;
     boolean showDot = false;
@@ -173,7 +170,7 @@ public class AppCategoriesFragment extends Fragment {
             adapter = new AppCategoryAdapter(requireActivity(), singleton.appCategories, new AppCategoryAdapter.OnItemClickListener() {
                 @Override
                 public void onCategoryClick(int position) {
-                    NavDirections action = AppCategoriesFragmentDirections.actionAppHomeFragmentToAppListFragment(singleton.appCategories.get(position).getId(), singleton.appCategories.get(position).getName(), getArguments().getBoolean("negate", false), getArguments().getFloat("alpha"));
+                    NavDirections action = AppCategoriesFragmentDirections.actionAppCategoriesFragmentToAppListFragment(singleton.appCategories.get(position).getId(), singleton.appCategories.get(position).getName(), getArguments().getBoolean("negate", false), getArguments().getFloat("alpha"));
                     Navigation.findNavController(requireView()).navigate(action);
                 }
 

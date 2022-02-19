@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recommend_graph"
-    app:startDestination="@id/appHomeFragment">
+    app:startDestination="@id/appCategoriesFragment">
 
     <fragment
-        android:id="@+id/appHomeFragment"
+        android:id="@+id/appCategoriesFragment"
         android:name="com.gearback.modules.recommendation.AppCategoriesFragment"
-        android:label="app_home_fragment"
+        android:label="app_categories_fragment"
         tools:layout="@layout/app_home_fragment" >
         <action
-            android:id="@+id/action_appHomeFragment_to_appListFragment"
+            android:id="@+id/action_appCategoriesFragment_to_appListFragment"
             app:destination="@id/appListFragment" />
     </fragment>
     <fragment
